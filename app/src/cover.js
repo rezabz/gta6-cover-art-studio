@@ -453,6 +453,25 @@ export function drawCover(ctx, state, w, h) {
     ctx.restore();
   });
 
+  // A warm glow blooming over the top-right corner, drawn after the panels so
+  // the sunset reads in every layout (in some layouts the disc sits behind a panel).
+  if (state.sun && state.layout !== 'full') {
+    const sx = w * 0.82;
+    const sy = photoArea.y + photoArea.h * 0.16;
+    const sr = Math.min(w, h) * 0.13;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const bloom = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr * 2.4);
+    bloom.addColorStop(0, 'rgba(255,150,40,0.34)');
+    bloom.addColorStop(0.5, 'rgba(255,80,120,0.12)');
+    bloom.addColorStop(1, 'rgba(255,46,136,0)');
+    ctx.fillStyle = bloom;
+    ctx.beginPath();
+    ctx.arc(sx, sy, sr * 2.4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
   // Badge ribbon, top left corner.
   if (state.badge && state.badgeText.trim()) {
     const bw = Math.min(w * 0.34, 340);

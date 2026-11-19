@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from '/home/hatch/workspace/make-fun/ui-tools/node_modules/playwright/index.mjs';
 
 const root = dirname(fileURLToPath(new URL('.', import.meta.url)));
-const entryRoot = join(root, '..');
+const entryRoot = root;
 const shots = JSON.parse(readFileSync(join(entryRoot, 'shots.json'), 'utf8'));
 const outDir = join(entryRoot, 'screenshots');
 mkdirSync(outDir, { recursive: true });

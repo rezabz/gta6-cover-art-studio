@@ -56,6 +56,7 @@ function commit() {
 
 function undo() {
   if (!undoStack.length) return;
+  pendingSnapshot = null;
   redoStack.push(snapshot());
   applySnapshot(undoStack.pop());
   syncHistoryButtons();
@@ -63,6 +64,7 @@ function undo() {
 
 function redo() {
   if (!redoStack.length) return;
+  pendingSnapshot = null;
   undoStack.push(snapshot());
   applySnapshot(redoStack.pop());
   syncHistoryButtons();
@@ -71,6 +73,23 @@ function redo() {
 function syncHistoryButtons() {
   document.getElementById('undo').disabled = undoStack.length === 0;
   document.getElementById('redo').disabled = redoStack.length === 0;
+}
+
+// Text and slider edits update live, so the pre-edit snapshot must be taken when
+// the edit starts (focus / pointer down) and pushed when it ends (change).
+let pendingSnapshot = null;
+
+function beginEdit() {
+  if (pendingSnapshot === null) pendingSnapshot = snapshot();
+}
+
+function endEdit() {
+  if (pendingSnapshot === null) return;
+  undoStack.push(pendingSnapshot);
+  if (undoStack.length > 60) undoStack.shift();
+  pendingSnapshot = null;
+  redoStack.length = 0;
+  syncHistoryButtons();
 }
 
 // ---- rendering ----------------------------------------------------------
@@ -388,11 +407,14 @@ function bindControls() {
     setStatus(`${first.name} now fills every panel.`);
   });
 
-  document.getElementById('zoom').addEventListener('input', (event) => {
+  const zoomInput = document.getElementById('zoom');
+  zoomInput.addEventListener('focus', beginEdit);
+  zoomInput.addEventListener('pointerdown', beginEdit);
+  zoomInput.addEventListener('input', (event) => {
     state.panelZoom[selectedPanel] = Number(event.target.value);
     render();
   });
-  document.getElementById('zoom').addEventListener('change', () => commit());
+  zoomInput.addEventListener('change', endEdit);
 
   document.getElementById('reset-panel').addEventListener('click', () => {
     commit();
@@ -402,25 +424,28 @@ function bindControls() {
   });
 
   const titleInput = document.getElementById('title');
+  titleInput.addEventListener('focus', beginEdit);
   titleInput.addEventListener('input', () => {
     state.title = titleInput.value;
     render();
   });
-  titleInput.addEventListener('change', () => commit());
+  titleInput.addEventListener('change', endEdit);
 
   const subtitleInput = document.getElementById('subtitle');
+  subtitleInput.addEventListener('focus', beginEdit);
   subtitleInput.addEventListener('input', () => {
     state.subtitle = subtitleInput.value;
     render();
   });
-  subtitleInput.addEventListener('change', () => commit());
+  subtitleInput.addEventListener('change', endEdit);
 
   const badgeInput = document.getElementById('badge-text');
+  badgeInput.addEventListener('focus', beginEdit);
   badgeInput.addEventListener('input', () => {
     state.badgeText = badgeInput.value;
     render();
   });
-  badgeInput.addEventListener('change', () => commit());
+  badgeInput.addEventListener('change', endEdit);
 
   document.getElementById('toggle-sun').addEventListener('change', (event) => {
     commit();
