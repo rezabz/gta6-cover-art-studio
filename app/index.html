@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Hour Cover Studio</title>
+<meta name="description" content="Turn any photo and caption into multi-panel sunset poster cover art, offline in your browser.">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="app">
+  <section class="controls" aria-label="Cover controls">
+    <h1 class="brand">Golden Hour</h1>
+    <p class="tagline">Cover Studio — photo + caption, poster art in seconds. Everything runs offline, on your machine.</p>
+
+    <h2>Photos</h2>
+    <label>Add photos
+      <input id="photos" type="file" accept="image/*" multiple>
+    </label>
+    <div class="thumbs" id="thumbs"></div>
+    <p class="hint">Click a thumbnail to put that photo in the selected panel. “Fill all” spreads one photo over every panel. Drag the cover to move the selected panel’s photo.</p>
+    <div class="row">
+      <button id="fill-all" type="button" class="secondary">Fill all panels</button>
+      <button id="use-samples" type="button" class="secondary">Load sample photos</button>
+    </div>
+
+    <h2>Selected panel</h2>
+    <p class="hint" id="panel-note">Panel 1 of 4</p>
+    <label>Zoom
+      <input id="zoom" type="range" min="1" max="3" step="0.05" value="1">
+    </label>
+    <div class="row">
+      <button id="reset-panel" type="button" class="secondary">Reset panel</button>
+    </div>
+
+    <h2>Words</h2>
+    <label>Title
+      <input id="title" type="text" maxlength="24" value="Neon Shores" autocomplete="off">
+    </label>
+    <label>Subtitle
+      <input id="subtitle" type="text" maxlength="48" value="chase the golden hour" autocomplete="off">
+    </label>
+    <label>Badge
+      <input id="badge-text" type="text" maxlength="12" value="New" autocomplete="off">
+    </label>
+
+    <h2>Layout</h2>
+    <div class="picker" id="layouts"></div>
+
+    <h2>Grade</h2>
+    <div class="picker" id="grades"></div>
+
+    <h2>Heat</h2>
+    <div class="stars" id="stars" role="group" aria-label="Heat rating, 1 to 5 stars"></div>
+
+    <h2>Extras</h2>
+    <div class="toggles">
+      <label><input id="toggle-sun" type="checkbox" checked> Sun disc</label>
+      <label><input id="toggle-badge" type="checkbox" checked> Badge ribbon</label>
+      <label><input id="toggle-grain" type="checkbox" checked> Film grain</label>
+    </div>
+
+    <h2>History</h2>
+    <div class="row">
+      <button id="undo" type="button" class="secondary">Undo</button>
+      <button id="redo" type="button" class="secondary">Redo</button>
+    </div>
+
+    <h2>Export</h2>
+    <div class="row">
+      <button id="export-one" type="button">Export this size</button>
+      <button id="export-all" type="button">Export all 3 sizes</button>
+    </div>
+    <p class="status" id="status" role="status"></p>
+  </section>
+
+  <section class="stage" aria-label="Cover preview">
+    <div class="sizebar" id="sizes" role="group" aria-label="Export size"></div>
+    <canvas id="cover" width="1080" height="1350" aria-label="Live cover preview"></canvas>
+    <p class="selected-note" id="selected-note">Click a panel on the cover to select it, then drag to move its photo.</p>
+  </section>
+</main>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

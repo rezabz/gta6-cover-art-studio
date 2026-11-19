@@ -1,0 +1,307 @@
+/* Golden Hour Cover Studio — editor chrome.
+   Sunset-neon palette: ink #14081f, panel #1e0b2e, pink #ff2e88,
+   orange #ff7a18, gold #ffc93c, teal #19e3d6, paper #fff6ec. */
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/anton.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/pacifico.woff2') format('woff2');
+}
+
+:root {
+  --ink: #14081f;
+  --panel: #1e0b2e;
+  --panel-2: #2a1140;
+  --line: #3d1c5c;
+  --pink: #ff2e88;
+  --orange: #ff7a18;
+  --gold: #ffc93c;
+  --teal: #19e3d6;
+  --paper: #fff6ec;
+  --muted: #c9a8d8;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.app {
+  display: flex;
+  gap: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.controls {
+  width: 340px;
+  flex: 0 0 340px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.brand {
+  font-family: Anton, sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.5px;
+  margin: 0 0 2px;
+  background: linear-gradient(90deg, var(--gold), var(--orange), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  color: var(--muted);
+  margin: 0 0 18px;
+  font-size: 13.5px;
+}
+
+.controls h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin: 20px 0 8px;
+}
+
+.controls h2:first-of-type { margin-top: 0; }
+
+.controls label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.controls input[type="text"],
+.controls select {
+  width: 100%;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 10px;
+  font: inherit;
+  margin-top: 4px;
+}
+
+.controls input[type="text"]:focus,
+.controls select:focus,
+.controls input[type="range"]:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.controls input[type="file"] { margin-top: 6px; }
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.thumbs img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.thumbs img.active { border-color: var(--gold); }
+
+.hint { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
+
+.picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.picker button {
+  background: var(--panel-2);
+  color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 8px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.picker button:hover { border-color: var(--pink); }
+
+.picker button.active {
+  border-color: var(--gold);
+  background: #3a1a52;
+  box-shadow: inset 0 0 0 1px var(--gold);
+}
+
+.swatch { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 7px; vertical-align: -2px; border: 1px solid rgba(255, 246, 236, 0.5); }
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.row button { flex: 1; }
+
+button {
+  background: var(--pink);
+  color: var(--paper);
+  border: none;
+  border-radius: 9px;
+  padding: 11px 14px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+button:hover { filter: brightness(1.12); }
+
+button.secondary {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+
+button:disabled { opacity: 0.45; cursor: default; }
+
+.stars { display: flex; gap: 4px; }
+
+.stars button {
+  background: none;
+  border: none;
+  padding: 4px;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.stars button.lit { color: var(--gold); }
+
+.toggles label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--paper);
+  margin-bottom: 6px;
+}
+
+.toggles input { width: 18px; height: 18px; accent-color: var(--pink); }
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--pink);
+}
+
+.status {
+  min-height: 20px;
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--teal);
+}
+
+.stage {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.stage .sizebar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stage .sizebar button {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+
+.stage .sizebar button.active {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px var(--gold);
+}
+
+#cover {
+  max-width: 100%;
+  max-height: calc(100vh - 140px);
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  cursor: grab;
+  touch-action: none;
+}
+
+#cover:active { cursor: grabbing; }
+
+.selected-note {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
+
+/* Fixed screenshot scenes: the cover alone fills the viewport. */
+body.shot-cover { background: var(--ink); }
+body.shot-cover .app { display: block; max-width: none; padding: 0; margin: 0; }
+body.shot-cover .controls,
+body.shot-cover .sizebar,
+body.shot-cover .selected-note { display: none; }
+body.shot-cover .stage { display: block; }
+body.shot-cover #cover {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .app { flex-direction: column; }
+  .controls { width: 100%; flex: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
